@@ -48,7 +48,24 @@ print(item_name, item_code)  # 삼성전자 005930
 
 ```
 
-### 2. 상세 정보(목표가, 의견, 증권사 등) DataFrame으로 수집
+### 2. 리포트 PDF 링크 수집 후 PDF 일괄 다운로드
+
+아래 코드는 지정한 페이지(예: 1~2)에서 삼성전자 리포트 PDF의 다운로드 링크를 수집한 뒤,  
+해당 PDF 파일들을 자동으로 저장합니다.
+
+```python
+df_pdf = crawler.get_pdf_links("삼성전자", page_from=1, page_to=2) # PDF 링크 수집
+crawler.download_pdfs(df_pdf, item_name="삼성전자") # PDF 파일 저장
+```
+
+삼성전자_리포트_pdf/
+├─ report_1.pdf
+├─ report_2.pdf
+├─ report_3.pdf
+├─ ...
+
+
+### 3. 상세 정보(목표가, 의견, 증권사 등) DataFrame으로 수집
 
 ```python
 df_detail = crawler.get_report_detail_list(item_name="카카오", item_code="035720", start_page=1, end_page=2)
@@ -63,7 +80,6 @@ print(df_detail.head())
 | ...    | ...                   | ...        | ...       | ...    | ...    |
 | 카카오   | 가능성에 베팅             | SK증권       | 2025.07.14 | 78,000 | 매수    |
 | 카카오   | B2C 영역 확장의 기점      | 교보증권      | 2025.07.09 | 68,500 | Buy    |
-| ...    | ...                   | ...        | ...       | ...    | ...    |
 
 
 ```python
@@ -86,5 +102,5 @@ final_df = pd.concat(all_results, ignore_index=True)
 print(final_df)
 ```
 
-### ㅈㅂㅈㄷ
+
 
