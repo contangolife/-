@@ -29,7 +29,42 @@
 
 ## 사용 예시
 
-아래 코드를 실행하면 원하는 종목의 최신 리포트 정보를 한 번에 수집할 수 있습니다.
+아래는 주요 기능별 파이썬 사용 예시입니다.
+
+### 1. 종목명/코드 변환
+
+```python
+from naver_report_crawler import NaverReportCrawler
+
+crawler = NaverReportCrawler()
+
+# 종목명으로 코드 얻기
+item_name, item_code = crawler.get_name_code("삼성전자")
+print(item_name, item_code)  # 삼성전자 005930
+
+# 종목코드로 이름 얻기
+item_name, item_code = crawler.get_name_code("005930")
+print(item_name, item_code)  # 삼성전자 005930
+
+```
+
+### 2. 상세 정보(목표가, 의견, 증권사 등) DataFrame으로 수집
+
+```python
+df_detail = crawler.get_report_detail_list(item_name="카카오", item_code="035720", start_page=1, end_page=2)
+print(df_detail.head())
+```
+
+| 기업명   | 제목                    | 증권사       | 날짜        | 목표가   | 투자의견 |
+|--------|-----------------------|------------|-----------|--------|--------|
+| 삼성전자 | 실망감도 이미 반영된 주가   | 미래에셋증권  | 2025.07.14 | 78,000 | 매수    |
+| 삼성전자 | 좋은 주식이 될 수 있다     | 대신증권      | 2025.07.09 | 74,000 | Buy    |
+| 삼성전자 | 확실한 실적 바닥         | 하나증권      | 2025.07.09 | 80,000 | Buy    |
+| ...    | ...                   | ...        | ...       | ...    | ...    |
+| 카카오   | 가능성에 베팅             | SK증권       | 2025.07.14 | 78,000 | 매수    |
+| 카카오   | B2C 영역 확장의 기점      | 교보증권      | 2025.07.09 | 68,500 | Buy    |
+| ...    | ...                   | ...        | ...       | ...    | ...    |
+
 
 ```python
 from naver_report_crawler import NaverReportCrawler
@@ -49,3 +84,7 @@ for corp in corp_list:
 # 여러 종목 결과를 하나의 DataFrame으로 결합
 final_df = pd.concat(all_results, ignore_index=True)
 print(final_df)
+```
+
+### ㅈㅂㅈㄷ
+
